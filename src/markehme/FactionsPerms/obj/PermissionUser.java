@@ -5,6 +5,12 @@ import java.util.Map.Entry;
 
 import markehme.FactionsPerms.FactionsPerms;
 
+/**
+ * Each user gets one of these that is defined in the permissions.yml file.
+ * These are stored in FactionsPerms.userSet. 
+ * @author MarkehMe <mark@markeh.me>
+ *
+ */
 public class PermissionUser {
 	public Map<String, Boolean> validPerms;
 	public Map<String, Group> inGroups;
