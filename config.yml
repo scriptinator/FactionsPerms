@@ -1,0 +1,8 @@
+# Default FactionsPerms config.yml
+
+# disallowConnectionsUntilReady
+# This disallows connections to the server until ready
+# this is reccomended as it will prevent any NPEs while
+# we're waiting for Factions to be ready. This adds max
+# 1-2 seconds load time to your server but is worth it.
+disallowConnectionsUntilReady: true
