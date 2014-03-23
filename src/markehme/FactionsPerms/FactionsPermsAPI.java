@@ -125,6 +125,7 @@ public class FactionsPermsAPI {
 		for( String currentGroup : FactionsPerms.userSet.get(player).inGroups.keySet()) {
 			if(factionType.equals(FType.FACTION)) {
 				
+				// Get relationship to the land they're in
 				Rel relation = uPlayer.getRelationTo(factionLandIn);
 				
 				if(relation.equals(Rel.LEADER) || relation.equals(Rel.OFFICER) || relation.equals(Rel.MEMBER) || relation.equals(Rel.RECRUIT)) {
@@ -168,7 +169,7 @@ public class FactionsPermsAPI {
 		}	
 		
 		
-		return false;
+		return result;
 	}
 	
 }
