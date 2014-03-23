@@ -65,26 +65,18 @@ public class FactionsPerms extends JavaPlugin {
 		permissionsConfig = YamlConfiguration.loadConfiguration(permissionsConfigFile);
 		
 		if(!permissionsConfigFile.exists()) {
-			// Let's build a permissions file. 
-			permissionsConfig.set("Permissions.default.global", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.current", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.ally", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.neutral", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.enemy", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.safezone", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.warzone", Arrays.asList(""));
-			permissionsConfig.set("Permissions.default.factions.wilderness", Arrays.asList(""));
-			try {
-				permissionsConfig.save(permissionsConfigFile);
-			} catch (IOException e) {
-				this.getLogger().log(Level.INFO, "Failed to create a default permissions file. Do we have permission?");
-			}
+			createDefaultPermissionsFile();
+		}
+		
+		usersConfig = YamlConfiguration.loadConfiguration(usersConfigFile);
+		
+		if(!usersConfigFile.exists()) {
+			createDefaultUsersFile();
 		}
 		
 		if(getConfig().getBoolean("disallowConnectionsUntilReady")) {
 			getServer().getPluginManager().registerEvents(new ReadyCheck(), this);
 		}
-			
 		
 		// tests 
 		//permissionsSet.put("Default", new Group("Default", null, null, null, null, null, null, null, null));
@@ -97,6 +89,36 @@ public class FactionsPerms extends JavaPlugin {
 		new FactionsPermsReady(this).runTaskTimer(this, 1, 5);
 	}
 	
-
-
+	/**
+	 * Creates a default permissions file 
+	 */
+	private void createDefaultPermissionsFile() {
+		permissionsConfig.set("Permissions.default.global", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.current", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.ally", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.neutral", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.enemy", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.safezone", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.warzone", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.factions.wilderness", Arrays.asList(""));
+		
+		try {
+			permissionsConfig.save(permissionsConfigFile);
+		} catch (IOException e) {
+			this.getLogger().log(Level.INFO, "Failed to create a default permissions.yml file. Do we have permission?");
+		}
+		
+	}
+	
+	/**
+	 * Creates a default users.yml file
+	 */
+	private void createDefaultUsersFile() {
+		try {
+			permissionsConfigFile.createNewFile();
+		} catch (IOException e) {
+			this.getLogger().log(Level.INFO, "Failed to create a default users.yml file. Do we have permission?");
+			e.printStackTrace();
+		}
+	}
 }
