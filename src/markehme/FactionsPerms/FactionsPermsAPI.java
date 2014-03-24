@@ -126,7 +126,6 @@ public class FactionsPermsAPI {
 		Faction factionLandIn = BoardColls.get().getFactionAt(PS.valueOf(Bukkit.getPlayer(player)));
 		FType factionType = FType.valueOf(factionLandIn);
 		
-		FactionsPerms.userSet.get(player);
 		// loop through each group
 		for( String currentGroup : permuser.inGroups.keySet()) {
 			if(factionType.equals(FType.FACTION)) {
