@@ -2,6 +2,7 @@ package markehme.FactionsPerms;
 
 import markehme.FactionsPerms.obj.FPermGroup;
 import markehme.FactionsPerms.obj.Group;
+import markehme.FactionsPerms.obj.PermissionUser;
 import markehme.FactionsPerms.utilities.FType;
 
 import org.bukkit.Bukkit;
@@ -102,15 +103,19 @@ public class FactionsPermsAPI {
 		
 		permission = permission.toLowerCase(); // permissions are not case-sensitive
 		
+		PermissionUser permuser = FactionsPerms.userSet.get(player);
+		
 		// First, check the player defined values. These override all permissions
-		if(FactionsPerms.userSet.get(player).validPerms.containsKey(permission)) {
-			return(FactionsPerms.userSet.get(player).validPerms.get(permission)); // will return the valid boolean
+		if(permuser.validPerms.containsKey(permission)) {
+			FactionsPerms.userSet.get(player);
+			return(permuser.validPerms.get(permission)); // will return the valid boolean
 		}
 		
 		Boolean result = false; // default result value
 	
+		FactionsPerms.userSet.get(player);
 		// loop through each group
-		for(String currentGroup : FactionsPerms.userSet.get(player).inGroups.keySet()) {
+		for(String currentGroup : permuser.inGroups.keySet()) {
 			if(FactionsPerms.permissionsSet.get(currentGroup).Permissions_Global.containsKey(permission)) {
 				// each group can override another group - top to bottom
 				result = FactionsPerms.permissionsSet.get(currentGroup).Permissions_Global.get(permission);
@@ -121,8 +126,9 @@ public class FactionsPermsAPI {
 		Faction factionLandIn = BoardColls.get().getFactionAt(PS.valueOf(Bukkit.getPlayer(player)));
 		FType factionType = FType.valueOf(factionLandIn);
 		
+		FactionsPerms.userSet.get(player);
 		// loop through each group
-		for( String currentGroup : FactionsPerms.userSet.get(player).inGroups.keySet()) {
+		for( String currentGroup : permuser.inGroups.keySet()) {
 			if(factionType.equals(FType.FACTION)) {
 				
 				// Get relationship to the land they're in
