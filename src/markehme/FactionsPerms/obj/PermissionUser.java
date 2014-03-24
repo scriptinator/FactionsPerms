@@ -15,7 +15,7 @@ public class PermissionUser {
 	public HashMap<String, Boolean> validPerms;
 	public HashMap<String, Group> inGroups;
 	
-	public static String playerName;
+	public String playerName;
 	
 	public PermissionUser(String PlayerName, HashMap<String, Boolean> playerpermissions, HashMap<String, String> groups) {
 		
