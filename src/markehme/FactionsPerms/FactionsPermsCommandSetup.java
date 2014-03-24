@@ -8,7 +8,9 @@ import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.cmd.FCommand;
 
 public class FactionsPermsCommandSetup {
-
+	
+	public static FactionsPermsAPI api;
+	
 	public FactionsPermsCommandSetup() {
 		// Command: /f permissions
 		FactionsPerms.get().getLogger().log(Level.INFO, "Hooking command ... ");
