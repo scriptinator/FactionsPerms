@@ -279,12 +279,10 @@ public class FactionsPerms extends JavaPlugin {
 				
 				for (int i = 0; i < fCurrentPerms.size(); i++) {
 					String perm = (String) fCurrentPerms.get(i);
-					
-					if(perm.startsWith("-")) {
+ 					if(perm.startsWith("-")) {
 						if(Permissions_Warzone.containsKey(perm.substring(1))) {
 							Permissions_Warzone.remove(perm.substring(1));
 						}
-						
 						Permissions_Warzone.put(perm.substring(1), false);
 					} else {
 						Permissions_Warzone.put(perm, true);
@@ -358,7 +356,7 @@ public class FactionsPerms extends JavaPlugin {
 	}
 	
 	public static void loadUser(String user) {
-
+		
 		List<?> user_groups = usersConfig.getList("Users." + user + ".groups");
 		List<?> user_perms = usersConfig.getList("Users." + user + ".permissions");
 		
@@ -388,5 +386,9 @@ public class FactionsPerms extends JavaPlugin {
 			groups.put(group, group);
 			
 		}
+		
+		// add user to the userSet
+		userSet.put(user, new PermissionUser(user, permissions, groups));
+
 	}
 }
