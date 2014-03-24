@@ -25,7 +25,7 @@ public class ReadyCheck implements Listener {
 			return;
 		}
 		
-		if(!FactionsPerms.userSet.containsKey(event.getPlayer().getName().toLowerCase())) {
+		if(!FactionsPerms.userSet.containsKey(event.getPlayer().getName())) {
 			FactionsPerms.get().getLogger().log(Level.INFO, "Adding " + event.getPlayer().getName() + " to default group");
 			FactionsPerms.usersConfig.set("Users." + event.getPlayer().getName() + ".groups", Arrays.asList("default"));
 			FactionsPerms.usersConfig.set("Users." + event.getPlayer().getName() + ".permissions", Arrays.asList(""));
