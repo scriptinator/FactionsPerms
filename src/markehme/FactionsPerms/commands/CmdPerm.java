@@ -63,6 +63,25 @@ public class CmdPerm extends FCommand {
 				
 				return;
 			}
+			
+			if(args.get(0).equals("exec")) {
+				/*	
+					
+					Set MarkehMe's group to vip and add the permission factions.admin
+					/f permissions exec u:MarkeMe setgroup:vip addperm:factions.admin
+					
+					Add permissions warp.test and warp.example to Notch, Ben, and Jerry
+					/f permissions exec u:notch,ben,jerry addperm:warp.test,warp.example
+					
+					For group default in world creative add permission worldedit.wand
+					/f permission exec g:default w:creative addperm:worldedit.wand
+					
+					For group default in the world hardcore in the area warzone remove permissions essentials.feed, and essentials.fly
+					/f permission exec g:default w:hardcore a:warzone removeperm:-essentials.feed,-essentials.fly
+					
+				*/
+				 
+			}
 		}
 			
 	}
