@@ -12,10 +12,14 @@ import markehme.FactionsPerms.FactionsPerms;
  *
  */
 public class PermissionUser {
-	public HashMap<String, Boolean> validPerms;
-	public HashMap<String, Group> inGroups;
+	public static HashMap<String, Boolean> validPerms;
+	public static HashMap<String, Group> inGroups;
 	
-	public PermissionUser(String PlayerName, HashMap<String, String> playerpermissions, HashMap<String, String> groups) {
+	public static String playerName;
+	
+	public PermissionUser(String PlayerName, HashMap<String, Boolean> playerpermissions, HashMap<String, String> groups) {
+		
+		playerName = PlayerName;
 		
 		// Store all groups 
 		for(Entry<String, Group> entry : FactionsPerms.permissionsSet.entrySet()) {
@@ -24,22 +28,22 @@ public class PermissionUser {
 		}
 		
 		// Now apply user specific permissions 
-		for(Entry<String, String> entry : playerpermissions.entrySet()) {
-			//String key = entry.getKey();
-			String value = entry.getValue().toLowerCase();
+		for(Entry<String, Boolean> entry : playerpermissions.entrySet()) {
+			String key = entry.getKey().toLowerCase();
+			//String value = entry.getValue();
 			
-			if(value.startsWith("-")) {
+			if(key.startsWith("-")) {
 				// Remove existing permission
-				validPerms.remove(value.substring(1));
+				validPerms.remove(key.substring(1));
 				
 				// is a negative permission, so make it a false value 
-				validPerms.put(value.substring(1), false);
+				validPerms.put(key.substring(1), false);
 			} else {
 				// Remove existing permission
-				validPerms.remove(value);
+				validPerms.remove(key);
 				
 				// is a normal permission, so make a true value 
-				validPerms.put(value, true);
+				validPerms.put(key, true);
 			}
 		}
 	}	
