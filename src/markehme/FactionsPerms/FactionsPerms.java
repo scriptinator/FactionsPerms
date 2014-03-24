@@ -32,16 +32,16 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class FactionsPerms extends JavaPlugin {
 	
-	public static Map<String, Group> permissionsSet = new HashMap<>();
-	public static Map<String, PermissionUser> userSet = new HashMap<>();
+	public static Map<String, Group> permissionsSet		= new HashMap<>();
+	public static Map<String, PermissionUser> userSet	= new HashMap<>();
 	
 	public static boolean isReady = false;
 	
-	private FileConfiguration permissionsConfig = null;
-	private FileConfiguration usersConfig = null;
+	public static FileConfiguration permissionsConfig = null;
+	public static FileConfiguration usersConfig = null;
 	
-	private File permissionsConfigFile = null;
-	private File usersConfigFile = null;
+	public static File permissionsConfigFile = null;
+	public static File usersConfigFile = null;
 	
 	private static FactionsPerms plugin;
 	
@@ -128,7 +128,7 @@ public class FactionsPerms extends JavaPlugin {
 	 */
 	private void createDefaultUsersFile() {
 		try {
-			permissionsConfigFile.createNewFile();
+			usersConfigFile.createNewFile();
 		} catch (IOException e) {
 			this.getLogger().log(Level.INFO, "Failed to create a default users.yml file. Do we have permission?");
 			e.printStackTrace();
@@ -140,7 +140,9 @@ public class FactionsPerms extends JavaPlugin {
 	 */
 	private void loadPermissions() {
 		Set<String> groups = permissionsConfig.getConfigurationSection("Permissions").getKeys(false);
-				
+		
+		FactionsPerms.permissionsSet.clear();
+		
 		int groupCount = 0;
 		for(String group : groups) {
 			groupCount++;
@@ -308,7 +310,11 @@ public class FactionsPerms extends JavaPlugin {
 					}
 				}
 			}
-
+			
+			Group groupToAdd = new Group(group, Permissions_Global, Permissions_Current, Permissions_Ally, Permissions_Neutral, Permissions_Enemy, Permissions_Safezone, Permissions_Warzone, Permissions_Wilderness);
+			
+			FactionsPerms.permissionsSet.put(group, groupToAdd);
+			
 		}
 		
 		if(groupCount > 1) {
@@ -326,10 +332,60 @@ public class FactionsPerms extends JavaPlugin {
 	 * Load the users.yml file
 	 */
 	private void loadUsers() {
+		if(usersConfig.getConfigurationSection("Users") == null) {
+			this.getLogger().log(Level.INFO, "No Users section in users.yml - no users loaded (this is ok).");
+			return;
+		}
+		
 		Set<String> users = usersConfig.getConfigurationSection("Users").getKeys(false);
 		
 		int userCount = 0;
+		
 		for(String user : users) {
+			userCount++;
+			
+			loadUser(user);
+			
+		}
+		
+		if(userCount > 1) {
+			this.getLogger().log(Level.INFO, "Loaded " + userCount + " users");
+		} else if(userCount == 0) {
+			this.getLogger().log(Level.INFO, "No users loaded");
+		} else {
+			this.getLogger().log(Level.INFO, "Loaded 1 user");
+		}
+	}
+	
+	public static void loadUser(String user) {
+
+		List<?> user_groups = usersConfig.getList("Users." + user + ".groups");
+		List<?> user_perms = usersConfig.getList("Users." + user + ".permissions");
+		
+		HashMap<String, Boolean> permissions = new HashMap<String, Boolean>();
+		HashMap<String, String> groups = new HashMap<String, String>();
+		
+		// Load users permissions
+		for (int i = 0; i < user_perms.size(); i++) {
+			String perm = (String) user_perms.get(i);
+			
+			if(perm.startsWith("-")) {
+				permissions.remove(perm.substring(1));
+				
+				permissions.put(perm.substring(1), false);
+			} else {
+				permissions.remove(perm);
+				
+				permissions.put(perm, true);
+			}
+			
+		}
+		
+		// Load users groups
+		for (int i = 0; i < user_groups.size(); i++) {
+			String group = (String) user_groups.get(i);
+			
+			groups.put(group, group);
 			
 		}
 	}
