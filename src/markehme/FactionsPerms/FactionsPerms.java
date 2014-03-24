@@ -391,4 +391,8 @@ public class FactionsPerms extends JavaPlugin {
 		userSet.put(user, new PermissionUser(user, permissions, groups));
 
 	}
+	
+	public static void doReload() {
+		
+	}
 }
