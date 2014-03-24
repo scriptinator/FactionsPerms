@@ -1,5 +1,6 @@
 package markehme.FactionsPerms.commands;
 
+import markehme.FactionsPerms.FactionsPerms;
 import markehme.FactionsPerms.FactionsPermsAPI;
 
 import org.bukkit.ChatColor;
@@ -15,15 +16,24 @@ public class CmdPerm extends FCommand {
 		
 		this.addRequirements( ReqFactionsEnabled.get() );
 		
-		this.setHelp( "manages FactionsPerms" );
+		this.setHelp( "manage FactionsPerms" );
 		
 	}
 
 	@Override
 	public void perform() {
+		// Fetch FactionsPerms API
 		FactionsPermsAPI api = new FactionsPermsAPI();
 		
-
+		// I'll admit everything in here is done badly and I will re-do it to be much clearner - in the future. 
+		
+		if(args.size() == 0) {
+			msg(ChatColor.RED + "Invalid subcommand!");
+			msg(ChatColor.WHITE + "Subcommands:");
+			msg(ChatColor.WHITE + " - /f permissions reload");
+			msg(ChatColor.WHITE + " - /f permissions ihave <permission>");
+			return;
+		}
 		
 		if(args.size() == 1) {
 			if(args.get(0).equals("reload")) {
@@ -33,7 +43,7 @@ public class CmdPerm extends FCommand {
 					return;
 				}
 				
-				msg("reload commencing ... ");
+				FactionsPerms.doReload();
 				return;
 			}
 			
@@ -42,9 +52,12 @@ public class CmdPerm extends FCommand {
 					msg(ChatColor.RED + "You do not have the required permission to run this command.");
 					return;
 				}
+				
 				msg(ChatColor.DARK_RED + "Please specificy the permission!");
 				return;
 			}
+			
+			msg(ChatColor.DARK_RED + "Unknown subcommand!");
 			
 		}
 		
@@ -82,6 +95,8 @@ public class CmdPerm extends FCommand {
 				*/
 				 
 			}
+			
+			msg(ChatColor.DARK_RED + "Unknown subcommand!");
 		}
 			
 	}
