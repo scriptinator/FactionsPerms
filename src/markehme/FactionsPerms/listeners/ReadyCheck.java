@@ -11,13 +11,6 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 public class ReadyCheck implements Listener {
 	
 	/**
-	 * Removes the PlayerLoginCheck
-	 */
-	public void removePlayerLoginCheck() {
-		PlayerLoginEvent.getHandlerList().unregister(FactionsPerms.get());
-	}
-	
-	/**
 	 * Checks if FactionsPerms is ready 
 	 * @param event
 	 */
@@ -25,8 +18,11 @@ public class ReadyCheck implements Listener {
 	public void onLogin(PlayerLoginEvent event) {
 		if(!FactionsPerms.isReady) {
 			event.disallow(Result.KICK_OTHER, "Server is still starting up.. please try again.");
-		} else {
-			this.removePlayerLoginCheck();
+			return;
+		}
+		
+		if(!FactionsPerms.userSet.containsKey(event.getPlayer().getName().toLowerCase())) {
+			
 		}
 	}
 }
