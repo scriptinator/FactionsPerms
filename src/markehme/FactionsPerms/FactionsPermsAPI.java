@@ -98,7 +98,7 @@ public class FactionsPermsAPI {
 	 * @return
 	 */
 	public boolean hasPermission(String player, String permission) {
-		UPlayer uPlayer = UPlayer.get(player);
+		UPlayer uPlayer = UPlayer.get(player); // Get the Players UPlayer object
 		
 		permission = permission.toLowerCase(); // permissions are not case-sensitive
 		
@@ -110,7 +110,7 @@ public class FactionsPermsAPI {
 		Boolean result = false; // default result value
 	
 		// loop through each group
-		for( String currentGroup : FactionsPerms.userSet.get(player).inGroups.keySet()) {
+		for(String currentGroup : FactionsPerms.userSet.get(player).inGroups.keySet()) {
 			if(FactionsPerms.permissionsSet.get(currentGroup).Permissions_Global.containsKey(permission)) {
 				// each group can override another group - top to bottom
 				result = FactionsPerms.permissionsSet.get(currentGroup).Permissions_Global.get(permission);
@@ -168,7 +168,7 @@ public class FactionsPermsAPI {
 			}
 		}	
 		
-		
+		// Return the result
 		return result;
 	}
 	
