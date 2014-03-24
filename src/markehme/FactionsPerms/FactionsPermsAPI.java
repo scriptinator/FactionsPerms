@@ -1,5 +1,7 @@
 package markehme.FactionsPerms;
 
+import java.util.logging.Level;
+
 import markehme.FactionsPerms.obj.FPermGroup;
 import markehme.FactionsPerms.obj.Group;
 import markehme.FactionsPerms.obj.PermissionUser;
@@ -99,11 +101,16 @@ public class FactionsPermsAPI {
 	 * @return
 	 */
 	public boolean hasPermission(String player, String permission) {
-		UPlayer uPlayer = UPlayer.get(player); // Get the Players UPlayer object
 		
 		permission = permission.toLowerCase(); // permissions are not case-sensitive
 		
 		PermissionUser permuser = FactionsPerms.userSet.get(player);
+		
+		// See if we fetched the player
+		if(permuser == null) {
+			FactionsPerms.get().getLogger().log(Level.INFO, "(odd) user " + player + " was not found in the userSet");
+			return false;
+		}
 		
 		// First, check the player defined values. These override all permissions
 		if(permuser.validPerms.containsKey(permission)) {
@@ -112,8 +119,7 @@ public class FactionsPermsAPI {
 		}
 		
 		Boolean result = false; // default result value
-	
-		FactionsPerms.userSet.get(player);
+		
 		// loop through each group
 		for(String currentGroup : permuser.inGroups.keySet()) {
 			if(FactionsPerms.permissionsSet.get(currentGroup).Permissions_Global.containsKey(permission)) {
@@ -122,12 +128,21 @@ public class FactionsPermsAPI {
 			}
 		}
 		
+		// Get the Players UPlayer object
+		UPlayer uPlayer = UPlayer.get(player); 
+		
 		// Work out what sort of land they're in
 		Faction factionLandIn = BoardColls.get().getFactionAt(PS.valueOf(Bukkit.getPlayer(player)));
 		FType factionType = FType.valueOf(factionLandIn);
 		
 		// loop through each group
-		for( String currentGroup : permuser.inGroups.keySet()) {
+		for(String currentGroup : permuser.inGroups.keySet()) {
+			
+			if(FactionsPerms.permissionsSet.get(currentGroup) == null) {
+				FactionsPerms.get().getLogger().log(Level.INFO, "(odd) " + currentGroup + " is not in the permissionsSet");
+				break;
+			}
+			
 			if(factionType.equals(FType.FACTION)) {
 				
 				// Get relationship to the land they're in
@@ -154,7 +169,6 @@ public class FactionsPermsAPI {
 						result = FactionsPerms.permissionsSet.get(currentGroup).Permissions_Neutral.get(permission);
 					}	
 				}
-				
 			} else if(factionType.equals(FType.SAFEZONE)) {
 				// In a SafeZone so apply SafeZone permissions 
 				if(FactionsPerms.permissionsSet.get(currentGroup).Permissions_Safezone.containsKey(permission)) {
