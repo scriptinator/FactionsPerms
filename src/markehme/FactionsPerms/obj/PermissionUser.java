@@ -12,8 +12,8 @@ import markehme.FactionsPerms.FactionsPerms;
  *
  */
 public class PermissionUser {
-	public static HashMap<String, Boolean> validPerms;
-	public static HashMap<String, Group> inGroups;
+	public HashMap<String, Boolean> validPerms;
+	public HashMap<String, Group> inGroups;
 	
 	public static String playerName;
 	
