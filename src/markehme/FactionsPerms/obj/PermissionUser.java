@@ -2,6 +2,7 @@ package markehme.FactionsPerms.obj;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 import markehme.FactionsPerms.FactionsPerms;
 
@@ -12,8 +13,8 @@ import markehme.FactionsPerms.FactionsPerms;
  *
  */
 public class PermissionUser {
-	public HashMap<String, Boolean> validPerms;
-	public HashMap<String, Group> inGroups;
+	public HashMap<String, Boolean> validPerms	= new HashMap<String, Boolean>();
+	public HashMap<String, Group> inGroups		= new HashMap<String, Group>();
 	
 	public String playerName;
 	
@@ -22,9 +23,13 @@ public class PermissionUser {
 		playerName = PlayerName;
 		
 		// Store all groups 
-		for(Entry<String, Group> entry : FactionsPerms.permissionsSet.entrySet()) {
+		for(Entry<String, String> entry : groups.entrySet()) {
 			//String key = entry.getKey();
-			inGroups.put(entry.getKey(), entry.getValue());
+			if(FactionsPerms.permissionsSet.get(entry.getValue()) == null) {
+				FactionsPerms.get().getLogger().log(Level.INFO, "Group '"+entry.getValue()+"' not found for user " + PlayerName);
+			} else { 
+				inGroups.put(entry.getKey(), FactionsPerms.permissionsSet.get(entry.getValue()));
+			}
 		}
 		
 		// Now apply user specific permissions 
