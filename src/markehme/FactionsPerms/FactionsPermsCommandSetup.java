@@ -13,9 +13,8 @@ public class FactionsPermsCommandSetup {
 	
 	public FactionsPermsCommandSetup() {
 		// Command: /f permissions
-		FactionsPerms.get().getLogger().log(Level.INFO, "Hooking command ... ");
 		addSubCommand(new CmdPerm());
-		FactionsPerms.get().getLogger().log(Level.INFO, "Command hooked! Ready.");
+		FactionsPerms.get().getLogger().log(Level.INFO, "Factions found and hooked.");
 	}
 	
 	public void addSubCommand(FCommand subCommand) {
