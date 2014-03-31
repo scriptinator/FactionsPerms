@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import markehme.FactionsPerms.listeners.ReadyCheck;
 import markehme.FactionsPerms.obj.Group;
 import markehme.FactionsPerms.obj.PermissionUser;
+import markehme.FactionsPerms.utilities.Metrics;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -44,6 +45,8 @@ public class FactionsPerms extends JavaPlugin {
 	public static File usersConfigFile = null;
 	
 	private static FactionsPerms plugin;
+	
+	public static Metrics metrics = null;
 	
 	public static FactionsPerms get() {
 		return plugin;
@@ -98,8 +101,16 @@ public class FactionsPerms extends JavaPlugin {
 		
 		this.getLogger().log(Level.INFO, "FactionsPerms is ready, waiting for Factions to be ready.");
 		
+		
+		try {
+			metrics = new Metrics(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		// This task is used to check if Factions is enabled
 		new FactionsPermsReady(this).runTaskTimer(this, 1, 5);
+		
 	}
 	
 	/**
