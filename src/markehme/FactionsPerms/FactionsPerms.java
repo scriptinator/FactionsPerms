@@ -99,8 +99,9 @@ public class FactionsPerms extends JavaPlugin {
 		
 		//permissionsSet.get("Default").Permissions_Ally.containsKey("factionsplus.reload");
 		
-		this.getLogger().log(Level.INFO, "FactionsPerms is ready, waiting for Factions to be ready.");
 		
+		
+		this.getLogger().log(Level.INFO, "FactionsPerms is ready, waiting for Factions to be ready.");
 		
 		try {
 			metrics = new Metrics(this);
@@ -320,10 +321,23 @@ public class FactionsPerms extends JavaPlugin {
 				}
 			}
 			
-			Group groupToAdd = new Group(group, Permissions_Global, Permissions_Current, Permissions_Ally, Permissions_Neutral, Permissions_Enemy, Permissions_Safezone, Permissions_Warzone, Permissions_Wilderness);
+			List<?> inheritGroups = null;
+			
+			if(!permissionsConfig.getList("Permissions."+group+".inherit").isEmpty()) {
+				inheritGroups = permissionsConfig.getList("Permissions."+group+".inherit");
+			}
+			
+			Group groupToAdd = new Group(group, Permissions_Global, Permissions_Current, Permissions_Ally, Permissions_Neutral, Permissions_Enemy, Permissions_Safezone, Permissions_Warzone, Permissions_Wilderness, inheritGroups);
 			
 			FactionsPerms.permissionsSet.put(group, groupToAdd);
 			
+		}
+		
+		// Now that all the groups are loaded, we can load the inherits 
+		if(groupCount > 0) {
+			for(String group : FactionsPerms.permissionsSet.keySet()) {
+				FactionsPerms.permissionsSet.get(group).setAllInherits();
+			}
 		}
 		
 		if(groupCount > 1) {
