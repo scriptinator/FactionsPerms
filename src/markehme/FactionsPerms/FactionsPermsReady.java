@@ -1,7 +1,5 @@
 package markehme.FactionsPerms;
 
-import java.util.logging.Level;
-
 import markehme.FactionsPerms.utilities.Metrics;
 import markehme.FactionsPerms.utilities.Metrics.Graph;
 
