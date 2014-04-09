@@ -4,6 +4,7 @@ import markehme.FactionsPerms.FactionsPerms;
 import markehme.FactionsPerms.FactionsPermsAPI;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 import com.massivecraft.factions.cmd.FCommand;
 import com.massivecraft.factions.cmd.req.ReqFactionsEnabled;
@@ -37,8 +38,9 @@ public class CmdPerm extends FCommand {
 		
 		if(args.size() == 1) {
 			if(args.get(0).equals("reload")) {
+				Player p = (Player) sender;
 				
-				if(!api.hasPermission(usender.getName(), "factionsperms.reload") && !usender.isConsole()) {
+				if(!api.playerHas(usender.getName(), "factionsperms.reload", p.getLocation().getWorld().getName()) && !usender.isConsole()) {
 					msg(ChatColor.RED + "You do not have the required permission to run this command.");
 					return;
 				}
@@ -48,7 +50,9 @@ public class CmdPerm extends FCommand {
 			}
 			
 			if(args.get(0).equals("ihave")) {
-				if(!api.hasPermission(usender.getName(), "factionsperms.ihave") && !usender.isConsole()) {
+				Player p = (Player) sender;
+				
+				if(!api.playerHas(usender.getName(), "factionsperms.ihave", p.getLocation().getWorld().getName()) && !usender.isConsole()) {
 					msg(ChatColor.RED + "You do not have the required permission to run this command.");
 					return;
 				}
@@ -63,12 +67,14 @@ public class CmdPerm extends FCommand {
 		
 		if(args.size() > 1) {
 			if(args.get(0).equals("ihave")) {
-				if(!api.hasPermission(usender.getName(), "factionsperms.ihave") && !usender.isConsole()) {
+				Player p = (Player) sender;
+				
+				if(!api.playerHas(usender.getName(), "factionsperms.ihave", p.getLocation().getWorld().getName()) && !usender.isConsole()) {
 					msg(ChatColor.RED + "You do not have the required permission to run this command.");
 					return;
 				}
 				
-				if(api.hasPermission(usender.getName(), args.get(1))) {
+				if(api.playerHas(usender.getName(), args.get(1), p.getLocation().getWorld().getName())) {
 					msg(ChatColor.GREEN + args.get(1) + " - yes");
 				} else {
 					msg(ChatColor.RED   + args.get(1) + " - no");

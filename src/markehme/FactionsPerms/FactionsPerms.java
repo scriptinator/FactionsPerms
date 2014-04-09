@@ -126,6 +126,8 @@ public class FactionsPerms extends JavaPlugin {
 		permissionsConfig.set("Permissions.default.factions.safezone", Arrays.asList(""));
 		permissionsConfig.set("Permissions.default.factions.warzone", Arrays.asList(""));
 		permissionsConfig.set("Permissions.default.factions.wilderness", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.world.world_the_nether.global", Arrays.asList(""));
+		permissionsConfig.set("Permissions.default.world.world_the_nether.factions.warzone", Arrays.asList(""));
 		
 		try {
 			permissionsConfig.save(permissionsConfigFile);
