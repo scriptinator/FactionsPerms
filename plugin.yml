@@ -1,6 +1,6 @@
 name: FactionsPerms
-main: markehme.FactionsPerms.FactionsPerms
-authors: ['MarkehMe']
+main: markehme.factionsperms.FactionsPerms
+authors: ['MarkehMe','silvernickel']
 website: http://markeh.me
 version: 1.0.0
 dev-url: http://dev.bukkit.org/bukkit-plugins/FactionsPerms/
